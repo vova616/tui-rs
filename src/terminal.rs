@@ -4,7 +4,7 @@ use std::io;
 use crate::backend::Backend;
 use crate::buffer::Buffer;
 use crate::layout::Rect;
-use crate::widgets::Widget;
+use crate::widgets::{StatefulWidget, Widget};
 
 /// Interface to the terminal backed by Termion
 #[derive(Debug)]
@@ -47,6 +47,17 @@ where
         W: Widget,
     {
         widget.draw(area, self.terminal.current_buffer_mut());
+    }
+
+    pub fn render_stateful_widget<W, P>(
+        &mut self,
+        widget: &mut W,
+        area: Rect,
+        properties: P,
+    ) where
+        W: StatefulWidget<P>,
+    {
+        widget.draw(area, self.terminal.current_buffer_mut(), properties);
     }
 }
 

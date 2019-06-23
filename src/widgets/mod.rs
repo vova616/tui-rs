@@ -85,3 +85,15 @@ pub trait Widget {
         f.render(self, area);
     }
 }
+
+pub trait StatefulWidget<P> {
+    fn draw(&mut self, area: Rect, buf: &mut Buffer, properties: P);
+
+    fn background(&self, area: Rect, buf: &mut Buffer, color: Color) {
+        for y in area.top()..area.bottom() {
+            for x in area.left()..area.right() {
+                buf.get_mut(x, y).set_bg(color);
+            }
+        }
+    }
+}
