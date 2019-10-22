@@ -100,7 +100,7 @@ where
 
     fn get_cursor(&mut self) -> io::Result<(u16, u16)> {
         let cursor = crossterm::cursor();
-        cursor.pos()
+        cursor.pos().map_err(|e| convert_error(e))
     }
 
     fn set_cursor(&mut self, x: u16, y: u16) -> io::Result<()> {
